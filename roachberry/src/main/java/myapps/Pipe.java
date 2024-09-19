@@ -20,8 +20,34 @@ public class Pipe {
 
         final StreamsBuilder builder = new StreamsBuilder();
 
-        builder.stream("streams-plaintext-input").to("streams-pipe-output"); //redirect the input to the output file
+        builder.stream("streams-input").to("streams-output"); //redirect the input to the output file
 
+
+        //Não funciona ainda
+        // builder.stream("streams-input")
+        //        .map((key, value) -> {
+        //        if (value != null && !value.isEmpty()) {
+        //            char firstChar = value.charAt(0);
+        //            if (firstChar == 'A') {
+        //            return new KeyValue<>(key, value);
+        //            } else if (firstChar == 'B') {
+        //            return new KeyValue<>(key, value);
+        //            }
+        //        }
+        //        return new KeyValue<>(key, value);
+        //        })
+        //        .to((key, value, recordContext) -> {
+        //        if (value != null && !value.isEmpty()) {
+        //            char firstChar = value.charAt(0);
+        //            if (firstChar == 'A') {
+        //            return "streams-output-0";
+        //            } else if (firstChar == 'B') {
+        //            return "streams-output-1";
+        //            }
+        //        }
+        //        return "streams-output";
+        //        })
+        //        ;
         final Topology topology = builder.build();
 
         final KafkaStreams streams = new KafkaStreams(topology, props);
