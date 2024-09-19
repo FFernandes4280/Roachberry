@@ -29,6 +29,6 @@ cd ..
 
 cd roachberry
 
-echo "Running the pipiline"
+echo "Running the pipeline"
 nohup mvn clean package
 nohup mvn exec:java -Dexec.mainClass=myapps.Pipe
