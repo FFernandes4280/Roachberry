@@ -16,7 +16,7 @@ public class JsonSplitterAndRouter {
         // Kafka Streams configuration
         Properties props = new Properties();
         props.put(StreamsConfig.APPLICATION_ID_CONFIG, "json-splitter-router-app");
-        props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "192.168.3.100:9092");
         props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
         props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass());
 
@@ -24,7 +24,7 @@ public class JsonSplitterAndRouter {
         KStreamBuilder builder = new KStreamBuilder();
 
         // Create a KStream from the source topic (e.g., "source-topic")
-        KStream<String, String> jsonStream = builder.stream("source-topic");
+        KStream<String, String> jsonStream = builder.stream("request-topic");
 
         // Use flatMap to split concatenated JSON objects based on "{" and "}"
         KStream<String, String> splitStream = jsonStream
@@ -45,19 +45,21 @@ public class JsonSplitterAndRouter {
             }
         );
 
+        splitStream.to(Serdes.String(),Serdes.String(),"request-topic");
+
         // Use branch to route each JSON to different streams based on the "identifier" field
-        @SuppressWarnings("unchecked")
-        KStream<String, String>[] branches = splitStream.branch(
-            (key, value) -> value.contains("\"identifier\": \"A\""), // Route to topic A
-            (key, value) -> value.contains("\"identifier\": \"B\""), // Route to topic B
-            (key, value) -> value.contains("\"identifier\": \"C\""), // Route to topic C
-            (key, value) -> true                                    // Default route for other identifiers
-        );
+        // @SuppressWarnings("unchecked")
+        // KStream<String, String>[] branches = splitStream.branch(
+        //     (key, value) -> value.contains("\"identifier\":\"A\""), // Route to topic A
+        //     (key, value) -> value.contains("\"identifier\":\"B\""), // Route to topic B
+        //     (key, value) -> value.contains("\"identifier\":\"C\""), // Route to topic C
+        //     (key, value) -> true                                    // Default route for other identifiers
+        // );
 
         // Send the filtered streams to different topics
-        branches[0].to(Serdes.String(),Serdes.String(),"topic-A");
-        branches[1].to(Serdes.String(),Serdes.String(),"topic-B");
-        branches[2].to(Serdes.String(),Serdes.String(),"topic-C");
+        // branches[0].to(Serdes.String(),Serdes.String(),"topic-A");
+        // branches[1].to(Serdes.String(),Serdes.String(),"topic-B");
+        // branches[2].to(Serdes.String(),Serdes.String(),"topic-C");
         // branches[3].to("topic-default", Produced.with(Serdes.String(), Serdes.String()));
 
         // Build the Kafka Streams topology

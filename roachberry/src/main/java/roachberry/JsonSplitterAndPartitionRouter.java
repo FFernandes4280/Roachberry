@@ -16,16 +16,17 @@ public class JsonSplitterAndPartitionRouter {
         // Kafka Streams configuration
         Properties props = new Properties();
         props.put(StreamsConfig.APPLICATION_ID_CONFIG, "json-splitter-router-app");
-        props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "192.168.3.100:9092");
         props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
         props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass());
-        props.put("partitioner.class", "roachberry.CustomJsonPartitioner");
+        
+        // props.put("partitioner.class", "roachberry.CustomJsonPartitioner");
         
         // Build the topology
         KStreamBuilder builder = new KStreamBuilder();
 
         // Create a KStream from the source topic (e.g., "source-topic")
-        KStream<String, String> jsonStream = builder.stream("source-topic");
+        KStream<String, String> jsonStream = builder.stream("request-topic");
 
         // Use flatMap to split concatenated JSON objects based on "{" and "}"
         KStream<String, String> splitStream = jsonStream
@@ -46,7 +47,7 @@ public class JsonSplitterAndPartitionRouter {
             }
         );
 
-        splitStream.to(Serdes.String(), Serdes.String(), "topic-A");
+        splitStream.to(Serdes.String(), Serdes.String(), "response-topic");
 
         // Build the Kafka Streams topology
         KafkaStreams streams = new KafkaStreams(builder, props);

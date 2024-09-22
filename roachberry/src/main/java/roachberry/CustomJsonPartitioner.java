@@ -17,11 +17,11 @@ public class CustomJsonPartitioner implements Partitioner {
         int numPartitions = cluster.partitionCountForTopic(topic);
 
         // Custom partitioning logic based on key or value
-        if (value.toString().contains("\"identifier\": \"A\"")) {
+        if (value.toString().contains("\"identifier\":\"A\"")) {
             return 0 % numPartitions; // Route to partition 0
-        } else if (value.toString().contains("\"identifier\": \"B\"")) {
+        } else if (value.toString().contains("\"identifier\":\"B\"")) {
             return 1 % numPartitions; // Route to partition 1
-        } else if (value.toString().contains("\"identifier\": \"C\"")) {
+        } else if (value.toString().contains("\"identifier\":\"C\"")) {
             return 2 % numPartitions; // Route to partition 2
         } else {
             return 3 % numPartitions; // Route to partition 3
