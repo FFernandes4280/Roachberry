@@ -1,0 +1,2 @@
+#remove shell from git statistics
+*.sh linguist-vendored
