@@ -8,15 +8,16 @@ echo "Starting Kafka server..."
 nohup bin/kafka-server-start.sh config/server.properties > kafka.log 2>&1 &
 sleep 5
 echo "Creating topics..."
-bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic response-topic
-bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 2 --topic request-topic
+bin/kafka-topics.sh --create --topic request-topic --bootstrap-server localhost:9092
+bin/kafka-topics.sh --create --topic response-topic --bootstrap-server localhost:9092
 
-bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic response-concatena-string-topic
-bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic response-salva-arquivo-topic
-bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic response-calcula-funcao-topic
-bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic request-concatena-string-topic
-bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic request-salva-arquivo-topic
-bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic request-calcula-funcao-topic
+bin/kafka-topics.sh --create --topic request-concatena-string-topic --bootstrap-server localhost:9092
+bin/kafka-topics.sh --create --topic response-concatena-string-topic --bootstrap-server localhost:9092
+bin/kafka-topics.sh --create --topic request-salva-arquivo-topic --bootstrap-server localhost:9092
+bin/kafka-topics.sh --create --topic response-salva-arquivo-topic --bootstrap-server localhost:9092
+bin/kafka-topics.sh --create --topic request-calcula-funcao-topic --bootstrap-server localhost:9092
+bin/kafka-topics.sh --create --topic response-calcula-funcao-topic --bootstrap-server localhost:9092
+
 cd ..
 cd roachberry
-echo "Please run the topic router or add the command to this script..."
+# echo "Please run the topic router or add the command to this script..."
