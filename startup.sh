@@ -9,11 +9,11 @@ nohup bin/kafka-server-start.sh config/server.properties > kafka.log 2>&1 &
 sleep 5
 echo "Creating topics..."
 #Kafka Cluster
-bin/kafka-topics.sh --create --topic source-db-topic --bootstrap-server 192.168.157.152:9092
-bin/kafka-topics.sh --create --topic source-ligh-topic --bootstrap-server 192.168.157.152:9092
-bin/kafka-topics.sh --create --topic qrcode-content-topic --bootstrap-server 192.168.157.152:9092
-bin/kafka-topics.sh --create --topic save-data-db-topic --bootstrap-server 192.168.157.152:9092
-bin/kafka-topics.sh --create --topic light-control-topic --bootstrap-server 192.168.157.152:9092
+bin/kafka-topics.sh --create --topic source-db-topic --bootstrap-server 200.235.84.122:9092
+bin/kafka-topics.sh --create --topic source-ligh-topic --bootstrap-server 200.235.84.122:9092
+bin/kafka-topics.sh --create --topic qrcode-content-topic --bootstrap-server 200.235.84.122:9092
+bin/kafka-topics.sh --create --topic save-data-db-topic --bootstrap-server 200.235.84.122:9092
+bin/kafka-topics.sh --create --topic light-control-topic --bootstrap-server 200.235.84.122:9092
 #Kafka Connect Cluster
 
 cd ..
