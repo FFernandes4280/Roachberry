@@ -1,8 +1,1 @@
-roachberry/WordCount.class
-roachberry/Pipe.class
-roachberry/WordCount$1.class
-roachberry/Pipe$1.class
-roachberry/LineSplit$1.class
-roachberry/LineSplit.class
-roachberry/ResponseRouter.class
-roachberry/RequestRouter.class
+roachberry/StreamRouter.class

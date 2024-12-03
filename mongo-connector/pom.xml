@@ -3,9 +3,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.yourcompany</groupId>
-    <artifactId>mongo-kafka-connector</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <properties>
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
+    </properties>
+
+    <groupId>com.kafkaconnect</groupId>
+    <artifactId>connector-library</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
 
     <dependencies>
         <!-- Kafka Connect API -->
@@ -43,4 +49,5 @@
             <version>2.14.1</version>
         </dependency>
     </dependencies>
+    
 </project>

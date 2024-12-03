@@ -3,8 +3,8 @@ from kafka import KafkaProducer
 
 MQTT_BROKER = 'localhost'
 MQTT_TOPIC = 'kafka'
-KAFKA_BROKER = 'localhost:9092'
-KAFKA_TOPIC = 'mosquitto'
+KAFKA_BROKER = '192.168.3.53:9092'
+KAFKA_TOPIC = 'mqtt-sink-topic'
 
 # Kafka Producer
 kafka_producer = KafkaProducer(bootstrap_servers=KAFKA_BROKER)
