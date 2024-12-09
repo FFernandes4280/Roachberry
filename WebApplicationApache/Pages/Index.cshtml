@@ -1,0 +1,91 @@
+﻿@page
+@model YourNamespace.Pages.IndexModel
+@{
+    var showModal = Model.ShowModal;
+    var message = Model.Message;
+
+}
+
+<div class="text-center">
+    <h1 class="display-4">Bem-vindo a nossa demonstração do Barramento de Serviços</h1>
+
+    <div id="servico1" class="card mb-4 p-3 border rounded shadow-sm">
+        <div class="card-body mb-2 p-0">
+            <label class="form-label text-muted fw-bold mb-2 text-start" style="float: inline-start;" for="texto">Digite o texto que deseja salvar no MongoDB</label>
+            <textarea class="form-control border-dark mb-2" type="text" name="texto" id="texto" placeholder="Seu Texto"></textarea>
+        </div>
+        <div class="card-footer text-end bg-white border-0 p-0">
+            <button class="btn btn-outline-dark" onclick="chamarServico('texto', 'save-data-dp-topic', 'pisca')">
+                Salvar
+            </button>
+            <button class="btn btn-outline-dark" onclick="gerarQRCode()">
+                Gerar QR Code
+            </button>
+        </div>
+        <div id="qrcode" class="d-grid" style="margin-top: 20px;">
+            <img style="width: 300px;align-self: center; justify-self: center;" id="QRCodeImg" />
+            <button class="btn btn-outline-dark d-none" style="align-self: end; justify-self: end;" id="apagarQRCode" onclick="apagarQRCode()">
+                Apagar QR Code
+            </button>
+        </div>
+    </div>
+
+    <div id="servico2" class="card mb-4 p-3 border rounded shadow-sm">
+        <div class="card-body mb-2 p-0">
+            <label class="form-label text-muted fw-bold mb-2 text-start" style="float: inline-start;" >Botões de controle da lantera</label>
+        </div>
+        <div class="card-footer text-end bg-white border-0 p-0">
+            <button class="btn btn-outline-dark" onclick="chamarServico('a', 'light-control-topic', 'acende')">
+                Acender
+            </button>
+            <button class="btn btn-outline-dark" onclick="chamarServico('a', 'light-control-topic', 'apaga')">
+                Apagar
+            </button>
+            <button class="btn btn-outline-dark" onclick="chamarServico('a', 'light-control-topic', 'pisca')">
+                Piscar
+            </button>
+        </div>
+    </div>
+
+</div>
+
+<!-- Modal HTML Structure -->
+<div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">Message</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @Model.Message
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Other HTML content -->
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Call your function after the page loads
+            buscarServico();
+
+            // Show the modal if ShowModal flag is true
+            var showModal = @Html.Raw(Json.Serialize(Model.ShowModal));
+            if (showModal) {
+                $('#messageModal').modal('show');
+            }
+        });
+
+        
+    </script>
+}
+
